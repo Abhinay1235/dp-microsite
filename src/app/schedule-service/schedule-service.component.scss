@@ -1,0 +1,74 @@
+@import "../../@vex/styles/_var.scss";
+
+.schedule-service-container {
+    background: url('../../assets/img/lightBG.svg') repeat center transparent;
+    
+    .mat-stepper-horizontal, .mat-stepper-vertical {
+        background-color: transparent;
+    }
+
+
+    .services-image-icon {
+        max-width: 40%;
+    }
+
+    .transport-chip-list {
+        min-width: 250px;
+        margin-bottom: 12px;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        .mat-mdc-chip-action {
+            font-weight:bold
+        }
+    }
+}
+
+.fixed-stepper-actions {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 8%;
+    padding: 0 1rem;
+    background-color:var(--color-primary-rgb);
+
+    .action-btn {
+        color: #ffffff;
+        font-weight: bold;
+        text-transform: uppercase;
+        .action-icon {
+            position: relative;
+            top: 5px;
+        }
+    }
+}
+
+.dp-link {
+   cursor: pointer;
+   color: var(--color-primary);
+}
+
+.services-wrapper {
+    height: 100%;
+    .service-label {
+        line-height: 1.25rem;
+    }
+}
+
+:host ::ng-deep .mat-horizontal-content-container,
+.review-container-content {
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    max-height: 60vh; /* Set the height to 100% of the viewport height */
+    min-height: 45vh;
+}
+
+.review-container {
+    .caption {
+        font-size: 14px;
+    }
+}
+
+
+

@@ -1,0 +1,178 @@
+<vex-page-layout mode="card">
+    <vex-page-layout-header class="flex flex-col items-start justify-center">
+        <div class="container">
+          <h2 class="headline m-0 page-title">SCHEDULE YOUR SERVICE</h2>
+        </div>
+    </vex-page-layout-header>
+    <vex-page-layout-content class="container">
+        <div class="card">
+            <div class="text-center pb-4 header schedule-service-container">
+                <div class="overflow-hidden">
+                    <mat-stepper [linear]="true" #stepper [style.display]="isReview ? 'none' : 'block'">
+                        <mat-step>
+                            <ng-template matStepLabel>
+                                <mat-icon class="icon-xl" svgIcon="mat:directions_car"></mat-icon>
+                                <div class="step-label">Step 01</div>
+                            </ng-template>
+
+                            <h2  class="step-header-label title mt-5 mb-3">Choose Vehicle</h2>
+
+                            <div @fadeInUp
+                                class="mt-6 mb-8 flex flex-col sm:flex-row gap-4 sm:gap-6 grid grid-cols-1 sm:grid-cols-1">
+                                <mat-radio-group class="gap-4" [(ngModel)]="selectedVehicle">
+                                    <mat-radio-button class="flex" color="warn" *ngFor="let vehicle of userInfo.vehicles" [checked]="vehicle.primaryVehicle" [value]="vehicle.value">{{vehicle.name}}</mat-radio-button>
+                                </mat-radio-group>
+                                <div class="title mt-4 mb-2 text-left">Dont see your vehicle ? <span class="dp-link">Create One</span></div>
+                                <div class="fixed-stepper-actions actions flex justify-end gap-2" *ngIf="selectedVehicle" matRipple>
+                                    <button class="action-btn" matStepperNext >
+                                        SERVICES 
+                                        <mat-icon class="mr-3 icon-sm action-icon" svgIcon="mat:fast_forward"></mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </mat-step>
+                        <mat-step>
+                            <ng-template matStepLabel>
+                                <mat-icon class="icon-xl" svgIcon="mat:local_car_wash"></mat-icon>
+                                <div class="step-label">Step 02</div>
+                            </ng-template>
+                            
+                            <h2  class="step-header-label title mt-5 mb-3">Services</h2>
+                                
+                            <div @fadeInUp
+                                class="mt-6 mb-8 mx-auto flex flex-col sm:flex-row gap-4 sm:gap-6 grid grid-cols-2 sm:grid-cols-4">
+                                <div *ngFor="let service of services; let i = index" (click)="toggleClickState(i)" class="bg-foreground rounded-lg">
+                                    <div
+                                    [ngClass]="{ 'border-primary bg-primary/10': activeState[i], 'hover:bg-app-bar border-gray-200 border-transparent': !activeState[i] }"
+                                    class="services-wrapper border block text-center p-6 trans-ease-out cursor-pointer relative text-dark flex flex-col items-center justify-center rounded-lg"
+                                    matRipple>
+                                        <img class="services-image-icon" [src]="imgPath + service.value + '.png'" alt="Image">
+                                        <h4 class="mb-0 mt-4 service-label">{{ service.label }}</h4>
+                                    </div>
+                                </div>
+                                <div class="fixed-stepper-actions actions flex justify-space-between gap-6" matRipple>
+                                    <button  class="action-btn"  matStepperPrevious>
+                                        <mat-icon class="ml-3 icon-sm action-icon" svgIcon="mat:fast_rewind"></mat-icon>
+                                        VEHICLE
+                                    </button>
+                                    <button  class="action-btn" matStepperNext *ngIf="servicesSelected > 0">
+                                        TRANSPORT
+                                        <mat-icon class="mr-3 icon-sm action-icon" svgIcon="mat:fast_forward"></mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </mat-step>
+                        <mat-step>
+                            <ng-template matStepLabel>
+                                <mat-icon class="icon-xl" svgIcon="mat:commute"></mat-icon>
+                                <div class="step-label">Step 03</div>
+                            </ng-template>
+
+                            <h2  class="step-header-label title mt-5 mb-3">Transportation</h2>
+                                
+                            <div @fadeInUp
+                                class="mt-6 mb-12 mx-auto flex flex-col sm:flex-row gap-4 sm:gap-6 grid grid-cols-1 sm:grid-cols-1">
+                                <mat-chip-listbox class="transport-chip-wrapper" aria-label="Transportation Option">
+                                    <mat-chip-option class="transport-chip-list title" *ngFor="let option of transportOptions; let i = index" (click)="transportSelected(option.value)">{{option.label.toUpperCase()}}</mat-chip-option>
+                                </mat-chip-listbox>
+                                <div class=" mx-auto flex flex-col sm:flex-row grid grid-cols-1 sm:grid-cols-1" [ngSwitch]="transportOption">
+                                    <div *ngSwitchCase="'pickup'"
+                                        @fadeInUp
+                                        class="rounded bg-app-bar overflow-hidden max-h-full w-full max-w-2xs flex-none flex flex-col mb-12 pt-4">
+                                        <mat-radio-group class="gap-4 w-full">
+                                            <mat-radio-button color="warn" class="flex text-left mb-4" *ngFor="let location of userInfo.locations" [checked]="location.primaryLocation" [value]="location.id">{{location.fullAddress}}</mat-radio-button>
+                                        </mat-radio-group>
+                                        
+                                        <div class="bg-hover mt-4 flex-none">
+                                            <button class="w-full"
+                                                    mat-button
+                                                    type="button">
+                                              <mat-icon class="mr-1 -ml-1" svgIcon="mat:add"></mat-icon>
+                                              <span>ADD LOCATION</span>
+                                            </button>
+                                          </div>
+                                    </div>
+                                </div>
+                                <div class=" fixed-stepper-actions actions flex justify-space-between gap-6">
+                                    <button  class="action-btn"  matStepperPrevious>
+                                        <mat-icon class="ml-3 icon-sm action-icon" svgIcon="mat:fast_rewind"></mat-icon>
+                                        Transport
+                                    </button>
+                                    <button  class="action-btn"  matStepperNext *ngIf="transportOption">
+                                        Appointment
+                                        <mat-icon class="mr-3 icon-sm action-icon" svgIcon="mat:fast_forward"></mat-icon>
+                                    </button>
+                                </div>
+                            </div> 
+                        </mat-step>
+                        <mat-step>
+                            <ng-template matStepLabel>
+                                <mat-icon class="icon-xl" svgIcon="mat:calendar_month"></mat-icon>
+                                <div class="step-label">Step 04</div>
+                            </ng-template>
+
+                            <h2  class="step-header-label title mt-5 mb-3">Appointment</h2>
+                                
+                            <div @fadeInUp
+                                class="mt-6 mb-12 mx-auto flex flex-col sm:flex-row gap-4 sm:gap-6 grid lg:grid-cols-3 sm:grid-cols-1">
+                                <mat-calendar class="dp-calender mb-12" [(selected)]="selectedDate" (selectedChange)="onDateChange()" minDate="currentDate"></mat-calendar>
+                                <mat-chip-listbox class="appointment-chip-wrapper block" aria-label="Appointment Time">
+                                    <h4 class="title w-full mb-2 text-left" *ngIf="availableSlots.length > 0">Available Slots:</h4>
+                                    <h4 class="title w-full mb-2 text-left" *ngIf="selectedDate && availableSlots.length == 0">No slots Available</h4>
+                                    <mat-chip-option class="appointment-chip-list title" *ngFor="let timeSlot of availableSlots; let i = index">{{timeSlot}}</mat-chip-option>
+                                </mat-chip-listbox>
+                                <div class="fixed-stepper-actions  actions flex justify-space-between gap-6">
+                                    <button  class="action-btn" matStepperPrevious>
+                                        <mat-icon class="ml-3 icon-sm action-icon" svgIcon="mat:fast_rewind"></mat-icon>
+                                        Transport
+                                    </button>
+                                    <button  class="action-btn" (click)="toggleReview()">
+                                        Review
+                                        <mat-icon class="mr-3 icon-sm action-icon" svgIcon="mat:fast_forward"></mat-icon>
+                                    </button>
+                                </div>
+                            </div>    
+                        </mat-step>
+                    </mat-stepper>
+                    <div class="review-container p-4" [style.display]="isReview ? 'block' : 'none'">
+                        <h2  class="step-header-label title mt-5 mb-3">Review</h2>
+                        <div @fadeInUp
+                                class="mt-6 review-container-content mb-1 sm:flex-row gap-4 sm:gap-6 grid grid-cols-1 sm:grid-cols-1">
+                            <div class="items-center flex" *ngFor="let item of reviewInfo | keyvalue">
+                                <div @scaleIn
+                                     class="w-10 h-10 rounded-full bg-primary/10 text-primary ltr:mr-3 rtl:ml-3 flex items-center justify-center">
+                                  <mat-icon class="icon-sm" svgIcon="mat:phone" *ngIf="item.key === 'number'"></mat-icon>
+                                  <mat-icon class="icon-sm" svgIcon="mat:mail" *ngIf="item.key === 'email'"></mat-icon>
+                                  <mat-icon class="icon-sm" svgIcon="mat:schedule" *ngIf="item.key === 'appointment'"></mat-icon>
+                                  <mat-icon class="icon-sm" svgIcon="mat:commute" *ngIf="item.key === 'transportation'"></mat-icon>
+                                  <mat-icon class="icon-sm" svgIcon="mat:directions_car" *ngIf="item.key === 'vehicle'"></mat-icon>
+                                  <mat-icon class="icon-sm" svgIcon="mat:local_car_wash" *ngIf="item.key === 'services'"></mat-icon>
+                                  <mat-icon class="icon-sm" svgIcon="mat:badge" *ngIf="item.key === 'firstname'"></mat-icon>
+                                  <mat-icon class="icon-sm" svgIcon="mat:badge" *ngIf="item.key === 'lastname'"></mat-icon>
+                                </div>
+                          
+                                <div @fadeInRight>
+                                  <p class="m-0 caption flex text-capitalize text-hint">{{item.key}}</p>
+                                  <div class="m-0 text-lg flex" *ngIf="['services','vehicle'].indexOf(item.key) < 0">{{item.value}}</div>
+                                  <div class="m-0 text-lg flex" *ngIf="item.key === 'vehicle'">Lexus RX 350, 35674 miles.</div>
+                                </div>
+
+                                <div class="fixed-stepper-actions  actions flex justify-space-between gap-6">
+                                    <button  class="action-btn" (click)="selectStep(3)">
+                                        <mat-icon class="ml-3 icon-sm action-icon" svgIcon="mat:fast_rewind"></mat-icon>
+                                        Back
+                                    </button>
+                                    <button  class="action-btn">
+                                        Schedule
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </vex-page-layout-content>
+</vex-page-layout>
+
+

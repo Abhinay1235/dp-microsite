@@ -1,0 +1,116 @@
+html {
+  box-sizing: border-box;
+  font-size: 16px;
+  height: 100%;
+  overflow: hidden;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11", "salt", "calt", "case";
+  @apply font-sans leading-normal antialiased;
+}
+
+body {
+  height: 100%;
+  letter-spacing: -0.006em;
+  @apply text-sm text-black;
+}
+
+div {
+  box-sizing: border-box;
+}
+
+input, textarea {
+  box-sizing: content-box;
+  line-height: 1.5;
+}
+
+button:focus {
+  outline: unset !important;
+}
+
+code {
+  background: var(--background-app-bar);
+  border-radius: var(--border-radius);
+  color: var(--text-color);
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  font-size: 85%;
+  padding: .2em .4em;
+}
+
+blockquote {
+  background: rgba(var(--color-primary), 0.1);
+  border-left: 3px solid theme('backgroundColor.primary');
+  color: rgba(0, 0, 0, .87);
+  font-style: normal;
+  margin: 1em 0 1.5em;
+  padding: 1em 1.5em;
+
+  > * {
+    margin: 0;
+  }
+}
+
+.text-capitalize {
+  text-transform: capitalize;
+}
+
+.justify-space-between {
+  justify-content: space-between;
+}
+
+.dp-calender {
+  --tw-border-opacity: 1;
+  border-color: rgba(var(--color-primary), var(--tw-border-opacity));
+  background-color: rgba(var(--color-primary), 0.1);
+  border-width: 1px;
+  border-radius: 10px;
+
+  .mat-calendar-body-today {
+      border-color: var(--color-primary);
+  }
+}
+
+.site-logo {
+  height: 2.5rem;
+  width: auto;
+}
+
+.site-title{
+  font-weight: bold;
+}
+
+.page-title {
+  font-weight: bold;
+  text-align: center;
+}
+
+.schedule-service-container { 
+  
+  .mat-step-header  {
+    padding: 0 10px !important;
+
+    .mat-step-label, .step-header-label {
+      font-weight: bold;
+    }
+    .mat-step-icon {
+      display: none;
+    }
+
+    &[aria-selected="true"] {
+
+      .mat-step-label-active {
+        color: rgba(var(--color-primary));
+      }
+
+    }
+  }
+
+  .step-header-label {
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+
+ .mat-stepper-horizontal-line {
+    border-top-color: rgb(82 63 105 / 69%);
+ }
+  
+}
+

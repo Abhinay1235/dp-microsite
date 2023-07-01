@@ -108,9 +108,19 @@ blockquote {
     font-weight: bold;
   }
 
- .mat-stepper-horizontal-line {
-    border-top-color: rgb(82 63 105 / 69%);
- }
+  .mat-stepper-horizontal-line {
+      border-top-color: rgb(82 63 105 / 69%);
+  }
+
+  .mat-mdc-chip.selected-chip {
+    .mat-mdc-chip-action-label{
+      color: #ffffff;
+    }
+  }
+
+  .mat-mdc-chip-action-label{
+    font-weight: bold;
+  }
   
 }
 

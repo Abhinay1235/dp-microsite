@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { fadeInRight400ms } from 'src/@vex/animations/fade-in-right.animation';
 import { fadeInUp400ms } from 'src/@vex/animations/fade-in-up.animation';
 import { scaleIn400ms } from 'src/@vex/animations/scale-in.animation';
@@ -20,9 +20,9 @@ import { stagger80ms } from 'src/@vex/animations/stagger.animation';
 
 
 export class ScheduleServiceComponent implements OnInit {
+  hideStepper: boolean = true;
   phoneNumber: string = '';
   selectedDate: Date | null;
-  currentDate = new Date();
   selectedVehicle: any;
   activeState: boolean[]=[];
   servicesSelected: number = 0;
@@ -47,11 +47,17 @@ export class ScheduleServiceComponent implements OnInit {
     ]
   }
 
+  numDays = 7;
+  currentDate: Date;
+  dates: {date:number, selected:boolean, fullDate: Date}[];
+  dtMonth: string = 'July';
+
+  months: string[] = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
   @ViewChild('stepper') stepper!: MatStepper;
 
   
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute,private router: Router) { }
 
   vehiclesList = [
     {name: "Lexus RX 350", mileage: "35674 miles", value:"lexus", selected: true},
@@ -99,10 +105,45 @@ export class ScheduleServiceComponent implements OnInit {
     appointment:"July 03, 8:30 AM"
   }
 
+  search(): void {
+
+    // Navigate to the SearchUser Component
+    this.router.navigate(['/']);
+  }
+
   ngOnInit(): void {
     this.phoneNumber = this.route.snapshot.paramMap.get('phoneNumber') || '';
     // Perform any additional actions with the phone number here
     console.log('Phone Number:', this.phoneNumber);
+  }
+
+  getPreviousWeek(date:Date): void {
+    const newDate = new Date(date);
+    newDate.setDate(date.getDate() - 7);
+    this.populateDates(newDate);
+  }
+
+  getNextWeek(date: Date): void {
+    const newDate = new Date(date);
+    newDate.setDate(date.getDate() + 1);
+    this.populateDates(newDate);
+  }
+
+  populateDates(date: Date): void {
+    this.dates = [];
+    let monthList = [];
+    for (let i = 0; i < this.numDays; i++) {
+      const newDate = new Date(date);
+      newDate.setDate(date.getDate() + i);
+      this.dates.push({date:newDate.getDate(), selected:false, fullDate:newDate });
+
+      //Find the month of the week and bind it to dtMonth to display
+      if(monthList.indexOf(this.months[newDate.getMonth()]) < 0) {
+        monthList.push(this.months[newDate.getMonth()]);
+      }
+    }
+
+    this.dtMonth = monthList.join(` - `);
   }
   
   toggleClickState(index: number): void {
@@ -128,9 +169,26 @@ export class ScheduleServiceComponent implements OnInit {
     this.isReview = !this.isReview;
   }
 
+  initiateDates() {
+    this.currentDate = new Date();
+    this.populateDates(this.currentDate);
+  }
+
   selectStep(index: number): void {
-    this.toggleReview();
     this.stepper.selectedIndex = index;
+
+    if(index === 3) {
+      this.initiateDates();
+    }
+  }
+
+  selectChip(chip: any): void {
+    this.dates.forEach((c: any) => {
+      c.selected = (c === chip);
+    });
+
+    this.selectedDate = chip.fullDate;
+    this.availableSlots = this.timeSlotList[chip.date]?this.timeSlotList[chip.date]:[];
   }
 
 }

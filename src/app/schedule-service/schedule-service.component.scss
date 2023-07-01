@@ -21,6 +21,27 @@
             font-weight:bold
         }
     }
+
+    .selected-chip {
+        background-color: var(--color-primary-rgb);
+    }
+
+    .date-picker-container{
+        align-items: center;
+        .date-picker-button {
+            min-width: 1rem;
+            background-color: var(--color-primary-rgb);
+            color: #ffffff;
+            position: relative;
+        }
+        .date-picker-button-left {
+            right: 1rem;
+        }
+        .date-picker-button-right {
+            left: 1rem;
+        }
+    }
+    
 }
 
 .fixed-stepper-actions {

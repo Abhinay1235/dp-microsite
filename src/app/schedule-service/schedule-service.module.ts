@@ -13,6 +13,7 @@ import { ScheduleServiceRoutingModule } from './schedule-service-routing-module'
 import { MatRadioModule } from '@angular/material/radio';
 import { FormsModule, FormControl } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatGridListModule} from '@angular/material/grid-list';
 import { PageLayoutModule } from 'src/@vex/components/page-layout/page-layout.module';
 
 
@@ -32,7 +33,8 @@ import { PageLayoutModule } from 'src/@vex/components/page-layout/page-layout.mo
     MatDatepickerModule,
     MatNativeDateModule,
     MatRippleModule,
-    MatIconModule
+    MatIconModule,
+    MatGridListModule
   ]
 })
 export class ScheduleServiceModule {

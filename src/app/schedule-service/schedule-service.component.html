@@ -23,13 +23,9 @@
                                     <mat-radio-button class="flex" color="warn" *ngFor="let vehicle of userInfo.vehicles" [checked]="vehicle.primaryVehicle" [value]="vehicle.value">{{vehicle.name}}</mat-radio-button>
                                 </mat-radio-group>
                                 <div class="title mt-4 mb-2 text-left">Dont see your vehicle ? <span class="dp-link">Create One</span></div>
-                                <div class="fixed-stepper-actions actions flex justify-end gap-2" *ngIf="selectedVehicle" matRipple>
-                                    <button class="action-btn" matStepperNext >
-                                        SERVICES 
-                                        <mat-icon class="mr-3 icon-sm action-icon" svgIcon="mat:fast_forward"></mat-icon>
-                                    </button>
-                                </div>
+                                
                             </div>
+
                         </mat-step>
                         <mat-step>
                             <ng-template matStepLabel>
@@ -49,16 +45,6 @@
                                         <img class="services-image-icon" [src]="imgPath + service.value + '.png'" alt="Image">
                                         <h4 class="mb-0 mt-4 service-label">{{ service.label }}</h4>
                                     </div>
-                                </div>
-                                <div class="fixed-stepper-actions actions flex justify-space-between gap-6" matRipple>
-                                    <button  class="action-btn"  matStepperPrevious>
-                                        <mat-icon class="ml-3 icon-sm action-icon" svgIcon="mat:fast_rewind"></mat-icon>
-                                        VEHICLE
-                                    </button>
-                                    <button  class="action-btn" matStepperNext *ngIf="servicesSelected > 0">
-                                        TRANSPORT
-                                        <mat-icon class="mr-3 icon-sm action-icon" svgIcon="mat:fast_forward"></mat-icon>
-                                    </button>
                                 </div>
                             </div>
                         </mat-step>
@@ -93,16 +79,6 @@
                                           </div>
                                     </div>
                                 </div>
-                                <div class=" fixed-stepper-actions actions flex justify-space-between gap-6">
-                                    <button  class="action-btn"  matStepperPrevious>
-                                        <mat-icon class="ml-3 icon-sm action-icon" svgIcon="mat:fast_rewind"></mat-icon>
-                                        Transport
-                                    </button>
-                                    <button  class="action-btn"  matStepperNext *ngIf="transportOption">
-                                        Appointment
-                                        <mat-icon class="mr-3 icon-sm action-icon" svgIcon="mat:fast_forward"></mat-icon>
-                                    </button>
-                                </div>
                             </div> 
                         </mat-step>
                         <mat-step>
@@ -115,22 +91,47 @@
                                 
                             <div @fadeInUp
                                 class="mt-6 mb-12 mx-auto flex flex-col sm:flex-row gap-4 sm:gap-6 grid lg:grid-cols-3 sm:grid-cols-1">
-                                <mat-calendar class="dp-calender mb-12" [(selected)]="selectedDate" (selectedChange)="onDateChange()" minDate="currentDate"></mat-calendar>
+                                <!-- <mat-calendar class="dp-calender mb-12" [(selected)]="selectedDate" (selectedChange)="onDateChange()" minDate="currentDate"></mat-calendar>
+                                <mat-chip-listbox class="appointment-chip-wrapper block" aria-label="Appointment Time">
+                                    <h4 class="title w-full mb-2 text-left" *ngIf="availableSlots.length > 0">Available Slots:</h4>
+                                    <h4 class="title w-full mb-2 text-left" *ngIf="selectedDate && availableSlots.length == 0">No slots Available</h4>
+                                    <mat-chip-option class="appointment-chip-list title" *ngFor="let timeSlot of availableSlots; let i = index">{{timeSlot}}</mat-chip-option>
+                                </mat-chip-listbox> -->
+                                <div class="date-picker-month">{{dtMonth}}</div>
+
+                                <div class="date-picker-container flex">
+                                    <button mat-button color="primary" class="date-picker-button date-picker-button-left" (click)="getPreviousWeek(dates[0].fullDate)">
+                                        <mat-icon class="icon-sm" svgIcon="mat:arrow_left"></mat-icon>
+                                    </button>
+                                    <div class="date-scroller w-full    ">
+                                        <mat-grid-list cols="7">
+                                            <mat-grid-tile>S</mat-grid-tile>
+                                            <mat-grid-tile>M</mat-grid-tile>
+                                            <mat-grid-tile>T</mat-grid-tile>
+                                            <mat-grid-tile>W</mat-grid-tile>
+                                            <mat-grid-tile>T</mat-grid-tile>
+                                            <mat-grid-tile>F</mat-grid-tile>
+                                            <mat-grid-tile>S</mat-grid-tile>
+                                        </mat-grid-list>
+                                        <mat-grid-list cols="7">
+                                            <mat-grid-tile *ngFor="let date of dates">
+                                                <mat-chip 
+                                                    [ngClass]="{ 'selected-chip': date.selected }"
+                                                    (click)="selectChip(date)"
+                                                >{{date.date}}</mat-chip>
+                                            </mat-grid-tile>
+                                        </mat-grid-list>
+                                    </div>
+                                    <button mat-button color="primary" class="date-picker-button date-picker-button-right" (click)="getNextWeek(dates[6].fullDate)">
+                                        <mat-icon class="icon-sm" svgIcon="mat:arrow_right"></mat-icon>
+                                    </button>
+                                </div>
+
                                 <mat-chip-listbox class="appointment-chip-wrapper block" aria-label="Appointment Time">
                                     <h4 class="title w-full mb-2 text-left" *ngIf="availableSlots.length > 0">Available Slots:</h4>
                                     <h4 class="title w-full mb-2 text-left" *ngIf="selectedDate && availableSlots.length == 0">No slots Available</h4>
                                     <mat-chip-option class="appointment-chip-list title" *ngFor="let timeSlot of availableSlots; let i = index">{{timeSlot}}</mat-chip-option>
                                 </mat-chip-listbox>
-                                <div class="fixed-stepper-actions  actions flex justify-space-between gap-6">
-                                    <button  class="action-btn" matStepperPrevious>
-                                        <mat-icon class="ml-3 icon-sm action-icon" svgIcon="mat:fast_rewind"></mat-icon>
-                                        Transport
-                                    </button>
-                                    <button  class="action-btn" (click)="toggleReview()">
-                                        Review
-                                        <mat-icon class="mr-3 icon-sm action-icon" svgIcon="mat:fast_forward"></mat-icon>
-                                    </button>
-                                </div>
                             </div>    
                         </mat-step>
                     </mat-stepper>
@@ -155,20 +156,66 @@
                                   <p class="m-0 caption flex text-capitalize text-hint">{{item.key}}</p>
                                   <div class="m-0 text-lg flex" *ngIf="['services','vehicle'].indexOf(item.key) < 0">{{item.value}}</div>
                                   <div class="m-0 text-lg flex" *ngIf="item.key === 'vehicle'">Lexus RX 350, 35674 miles.</div>
-                                </div>
-
-                                <div class="fixed-stepper-actions  actions flex justify-space-between gap-6">
-                                    <button  class="action-btn" (click)="selectStep(3)">
-                                        <mat-icon class="ml-3 icon-sm action-icon" svgIcon="mat:fast_rewind"></mat-icon>
-                                        Back
-                                    </button>
-                                    <button  class="action-btn">
-                                        Schedule
-                                    </button>
-                                </div>
+                                </div>         
                             </div>
                         </div>
                     </div>
+
+                    <!-- Stepper button replication-->
+                    <div class="schedule-actions" *ngIf="!isReview">
+                        <div class="fixed-stepper-actions actions flex justify-space-between gap-6" *ngIf="selectedVehicle && stepper.selectedIndex === 0" matRipple>
+                            <button  class="action-btn" (click)="search()" >
+                                <mat-icon class="ml-3 icon-sm action-icon" svgIcon="mat:fast_rewind"></mat-icon>
+                                Back to Search
+                            </button>
+                            <button class="action-btn" (click)="selectStep(1)">
+                                SERVICES 
+                                <mat-icon class="mr-3 icon-sm action-icon" svgIcon="mat:fast_forward"></mat-icon>
+                            </button>
+                        </div>
+                        <div class="fixed-stepper-actions actions flex justify-space-between gap-6" matRipple *ngIf="stepper.selectedIndex === 1">
+                            <button  class="action-btn" (click)="selectStep(0)" >
+                                <mat-icon class="ml-3 icon-sm action-icon" svgIcon="mat:fast_rewind"></mat-icon>
+                                VEHICLE
+                            </button>
+                            <button  class="action-btn" *ngIf="servicesSelected > 0" (click)="selectStep(2)">
+                                TRANSPORT
+                                <mat-icon class="mr-3 icon-sm action-icon" svgIcon="mat:fast_forward"></mat-icon>
+                            </button>
+                        </div>
+                        <div class=" fixed-stepper-actions actions flex justify-space-between gap-6" *ngIf="stepper.selectedIndex === 2">
+                            <button  class="action-btn" (click)="selectStep(1)">
+                                <mat-icon class="ml-3 icon-sm action-icon" svgIcon="mat:fast_rewind"></mat-icon>
+                                Services
+                            </button>
+                            <button  class="action-btn"  *ngIf="transportOption" (click)="selectStep(3)">
+                                Appointment
+                                <mat-icon class="mr-3 icon-sm action-icon" svgIcon="mat:fast_forward"></mat-icon>
+                            </button>
+                        </div>
+                        <div class="fixed-stepper-actions  actions flex justify-space-between gap-6" *ngIf="stepper.selectedIndex === 3">
+                            <button  class="action-btn" (click)="selectStep(2)">
+                                <mat-icon class="ml-3 icon-sm action-icon" svgIcon="mat:fast_rewind"></mat-icon>
+                                Transport
+                            </button>
+                            <button  class="action-btn" (click)="toggleReview()">
+                                Review
+                                <mat-icon class="mr-3 icon-sm action-icon" svgIcon="mat:fast_forward"></mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="review-actions" *ngIf="isReview">
+                        <div class="fixed-stepper-actions  actions flex justify-space-between gap-6">
+                            <button  class="action-btn" (click)="toggleReview()">
+                                <mat-icon class="ml-3 icon-sm action-icon" svgIcon="mat:fast_rewind"></mat-icon>
+                                Back
+                            </button>
+                            <button  class="action-btn">
+                                Schedule
+                            </button>
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
         </div>

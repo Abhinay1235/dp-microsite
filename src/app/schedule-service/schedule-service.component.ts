@@ -186,7 +186,6 @@ export class ScheduleServiceComponent implements OnInit {
     this.dates.forEach((c: any) => {
       c.selected = (c === chip);
     });
-
     this.selectedDate = chip.fullDate;
     this.availableSlots = this.timeSlotList[chip.date]?this.timeSlotList[chip.date]:[];
   }

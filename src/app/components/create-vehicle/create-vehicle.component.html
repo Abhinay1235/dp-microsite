@@ -1,0 +1,39 @@
+<form (ngSubmit)="save()" [formGroup]="vehicleForm" class="mb-2">
+    <div class="flex items-center" mat-dialog-title>
+        <h2 class="headline m-0 flex-auto">New Vehicle</h2>
+    </div>
+    <mat-divider class="text-border"></mat-divider>
+    <mat-dialog-content class="flex flex-col">
+        <mat-form-field class="vex-flex-form-field flex-none">
+            <mat-label>Year</mat-label>
+            <mat-select formControlName="selectedYear">
+              <mat-option *ngFor="let t of yearList" [value]="t">{{ t }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="vex-flex-form-field flex-none">
+            <mat-label>Make</mat-label>
+            <mat-select formControlName="selectedMake">
+              <mat-option *ngFor="let t of makeList" [value]="t">{{ t }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="vex-flex-form-field flex-none">
+            <mat-label>Model</mat-label>
+            <mat-select formControlName="selectedModel">
+              <mat-option *ngFor="let t of modelList" [value]="t">{{ t }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Odometer</mat-label>
+            <input formControlName="odometer" matInput>
+          </mat-form-field>
+      
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-button mat-dialog-close type="button">
+            <ng-container>Cancel</ng-container>
+        </button>
+        <button class="mr-4" color="primary" mat-flat-button type="submit">
+          <ng-container>Add Vehicle</ng-container>
+        </button>
+      </mat-dialog-actions>
+</form>

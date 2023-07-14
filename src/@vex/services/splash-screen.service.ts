@@ -24,6 +24,20 @@ export class SplashScreenService {
     }
   }
 
+  show() {
+    const player = this.animationBuilder.build([
+      style({
+        opacity: 0
+      }),
+      animate('400ms cubic-bezier(0.25, 0.8, 0.25, 1)', style({
+        opacity: 1
+      }))
+    ]).create(this.splashScreenElem);
+
+   // player.onDone(() => this.splashScreenElem.remove());
+    player.play();
+  }
+
   hide() {
     const player = this.animationBuilder.build([
       style({
@@ -34,7 +48,7 @@ export class SplashScreenService {
       }))
     ]).create(this.splashScreenElem);
 
-    player.onDone(() => this.splashScreenElem.remove());
+   // player.onDone(() => this.splashScreenElem.remove());
     player.play();
   }
 }

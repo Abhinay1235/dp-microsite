@@ -11,11 +11,14 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { ScheduleServiceComponent } from './schedule-service.component';
 import { ScheduleServiceRoutingModule } from './schedule-service-routing-module';
 import { MatRadioModule } from '@angular/material/radio';
-import { FormsModule, FormControl } from '@angular/forms';
+import { FormsModule} from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { PageLayoutModule } from 'src/@vex/components/page-layout/page-layout.module';
-
+import { CreateVehicleModule } from '../components/create-vehicle/create-vehicle.module';
+import { MatDialogModule } from '@angular/material/dialog';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import { UserLocationModule } from '../components/user-location/user-location.module';
 
 @NgModule({
   declarations: [ScheduleServiceComponent],
@@ -28,13 +31,17 @@ import { PageLayoutModule } from 'src/@vex/components/page-layout/page-layout.mo
     MatRadioModule,
     FormsModule,
     MatChipsModule,
+    MatDialogModule,
     MatFormFieldModule,
     MatCardModule,
     MatDatepickerModule,
     MatNativeDateModule,
     MatRippleModule,
     MatIconModule,
-    MatGridListModule
+    MatGridListModule,
+    CreateVehicleModule,
+    UserLocationModule,
+    MatCheckboxModule
   ]
 })
 export class ScheduleServiceModule {

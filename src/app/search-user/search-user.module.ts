@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { SearchUserComponent } from './search-user.component';
 import { SearchUserRoutingModule } from './search-user-routing-module';
 import { FormsModule } from '@angular/forms';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { FormsModule } from '@angular/forms';
     MatCardModule,
     MatRippleModule,
     MatIconModule,
-    FormsModule
+    FormsModule,
+    MatSnackBarModule
   ]
 })
 export class SearchUserModule {

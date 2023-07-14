@@ -39,8 +39,9 @@
         }
         .date-picker-button-right {
             left: 1rem;
-            
+
         }
+
     }
     
 }
@@ -67,14 +68,39 @@
 
 .dp-link {
    cursor: pointer;
-   color: var(--color-primary);
+   color: var(--color-primary-rgb);
 }
 
 .services-wrapper {
     height: 100%;
+    background-color: var(--background-app-bar);
+
+    &.bg-primary\/10{
+        background-color: rgba(var(--color-primary), 0.1);
+    }
+    
     .service-label {
         line-height: 1.25rem;
     }
+
+    .mat-mdc-checkbox {
+        position: absolute;
+        left: 0.5rem;
+        top:0.5rem;
+    }
+
+    .services-cost {
+        position: absolute;
+        right: 0.5rem;
+        top:0.5rem;
+        padding: 0 5px;
+
+        .mat-icon {
+            position: relative;
+            top: 3px;
+        }
+    }
+
 }
 
 :host ::ng-deep .mat-horizontal-content-container,
@@ -84,12 +110,19 @@
     flex-direction: column;
     max-height: 60vh; /* Set the height to 100% of the viewport height */
     min-height: 45vh;
+    padding-bottom: 2vh;
 }
 
 .review-container {
     .caption {
         font-size: 14px;
     }
+}
+
+.comments-text-area {
+    border: 1px solid rgba(0, 0, 0, 0.54);
+    border-radius: 5px;
+    min-height: 5rem;
 }
 
 

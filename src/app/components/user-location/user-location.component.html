@@ -1,0 +1,40 @@
+<form (ngSubmit)="save()" [formGroup]="locationForm" class="mb-2">
+    <div class="flex items-center" mat-dialog-title>
+        <h2 class="headline m-0 flex-auto">Pickup Location</h2>
+    </div>
+    <mat-divider class="text-border"></mat-divider>
+    <mat-dialog-content class="flex flex-col">
+        <mat-form-field class="vex-flex-form-field flex-none">
+            <mat-label>Address</mat-label>
+            <input formControlName="address" matInput>
+        </mat-form-field>
+        <mat-form-field class="vex-flex-form-field flex-none">
+            <mat-label>City</mat-label>
+            <input formControlName="city" matInput>
+        </mat-form-field>
+        <mat-form-field class="vex-flex-form-field flex-none">
+            <mat-label>State/Province</mat-label>
+            <input formControlName="state" matInput>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Zip Code</mat-label>
+            <input formControlName="zipcode" matInput>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Country/Region</mat-label>
+            <input formControlName="country" matInput>
+        </mat-form-field>
+      
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-button mat-dialog-close type="button">
+            <ng-container>Cancel</ng-container>
+        </button>
+        <button class="mr-4" color="primary" mat-flat-button *ngIf="!isValidAddress" (click)="(verifyAddress())">
+            <ng-container>Check</ng-container>
+          </button>
+        <button class="mr-4" color="primary" mat-flat-button type="submit" *ngIf="isValidAddress">
+          <ng-container>Use This Address For Pickup</ng-container>
+        </button>
+      </mat-dialog-actions>
+</form>

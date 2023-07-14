@@ -4,6 +4,8 @@ import { fadeInRight400ms } from 'src/@vex/animations/fade-in-right.animation';
 import { fadeInUp400ms } from 'src/@vex/animations/fade-in-up.animation';
 import { scaleIn400ms } from 'src/@vex/animations/scale-in.animation';
 import { stagger80ms } from 'src/@vex/animations/stagger.animation';
+import {MatSnackBar} from '@angular/material/snack-bar';
+
 @Component({
   selector: 'vex-search-user',
   templateUrl: './search-user.component.html',
@@ -37,7 +39,7 @@ export class SearchUserComponent  {
     ]
   }
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private _snackBar: MatSnackBar) { }
   
   onInput(event: any): void {
     const inputValue: string = event.target.value;
@@ -49,10 +51,13 @@ export class SearchUserComponent  {
   }
 
   search(): void {
-    // Perform any necessary actions with the phone number here
-
-    // Navigate to the SearchResultsComponent with the phone number parameter
-    this.router.navigate(['/schedule-service', this.phoneNumber]);
+    if(this.phoneNumber)
+      // Navigate to the SearchResultsComponent with the phone number parameter
+      this.router.navigate(['/schedule-service', this.phoneNumber]);
+    else
+      this._snackBar.open("Enter Phone Number", 'CLOSE', {
+        duration: 3000,
+      });
   }
   
 

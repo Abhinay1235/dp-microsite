@@ -14,6 +14,10 @@ const routes: Routes = [
       {
         path: 'schedule-service/:phoneNumber',
         loadChildren: () => import('./schedule-service/schedule-service.module').then(m => m.ScheduleServiceModule),
+      },
+      {
+        path: 'settings',
+        loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule),
       }
     ]
   }

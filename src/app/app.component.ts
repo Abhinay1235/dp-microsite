@@ -1,4 +1,4 @@
-import { Component, Inject, LOCALE_ID, Renderer2 } from '@angular/core';
+import { Component, Inject, LOCALE_ID, OnInit, Renderer2 } from '@angular/core';
 import { ConfigService } from '../@vex/config/config.service';
 import { Settings } from 'luxon';
 import { DOCUMENT } from '@angular/common';
@@ -13,13 +13,15 @@ import { ColorSchemeName } from '../@vex/config/colorSchemeName';
 import { MatIconRegistry, SafeResourceUrlWithIconOptions } from '@angular/material/icon';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ColorVariable, colorVariables } from '../@vex/components/config-panel/color-variables';
+import { StoreSettingsService } from 'src/@vex/services/store-settings.service';
 
 @Component({
   selector: 'vex-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+
   constructor(private configService: ConfigService,
               private renderer: Renderer2,
               private platform: Platform,
@@ -30,7 +32,9 @@ export class AppComponent {
               private navigationService: NavigationService,
               private splashScreenService: SplashScreenService,
               private readonly matIconRegistry: MatIconRegistry,
-              private readonly domSanitizer: DomSanitizer) {
+              private readonly domSanitizer: DomSanitizer,
+              private storeSettingsService: StoreSettingsService,
+            ) {
     Settings.defaultLocale = this.localeId;
 
     if (this.platform.BLINK) {
@@ -75,63 +79,22 @@ export class AppComponent {
      *    }
      *  });
      */
+  }
 
-    /**
-     * Config Related Subscriptions
-     * You can remove this if you don't need the functionality of being able to enable specific configs with queryParams
-     * Example: example.com/?layout=apollo&style=default
-     */
-    this.route.queryParamMap.subscribe(queryParamMap => {
-      if (queryParamMap.has('layout')) {
-        this.configService.setConfig(queryParamMap.get('layout') as VexConfigName);
-      }
+  ngOnInit(): void {
 
-      if (queryParamMap.has('style')) {
-        this.configService.updateConfig({
-          style: {
-            colorScheme: queryParamMap.get('style') as ColorSchemeName
-          }
-        });
-      }
-
-      if (queryParamMap.has('primaryColor')) {
-        const color: ColorVariable = colorVariables[queryParamMap.get('primaryColor')];
-
-        if (color) {
-          this.configService.updateConfig({
-            style: {
-              colors: {
-                primary: color
-              }
-            }
-          });
-        }
-      }
-
-      if (queryParamMap.has('rtl')) {
-        this.configService.updateConfig({
-          direction: coerceBooleanProperty(queryParamMap.get('rtl')) ? 'rtl' : 'ltr'
-        });
-      }
-    });
-
-    /**
-     * Add your own routes here
-     */
-    this.navigationService.items = [
-      {
-        type: 'subheading',
-        label: 'Dashboards',
-        children: [
-          {
-            type: 'link',
-            label: 'Analytics',
-            route: '/',
-            icon: 'mat:insights',
-            routerLinkActiveOptions: { exact: true }
-          }
-        ]
-      }
-    ];
+    this.storeSettingsService.StoreServices = [
+      { id: 101,label: "Oil Chnage",price: "49.99",icon: "",selected: true},
+      { id: 102,label: "Wheel Alignmant",price: "49.99",icon: "",selected: true},
+      { id: 103,label: "Factory Service",price: "356.99",icon: "",selected: true},
+      { id: 104,label: "Tire Rotation",price: "110.49",icon: "",selected: false},
+      { id: 105,label: "Brakes",price: "49.99",icon: "",selected: true},
+      { id: 106,label: "Engine Light On",price: "80",icon: "",selected: true},
+      { id: 107,label: "Recall",price: "49.99",icon: "",selected: true},
+      { id: 108,label: "Entertainment",price: "149.99",icon: "",selected: true},
+      { id: 109,label: "Inspection",price: "39.99",icon: "",selected: true},
+      { id: 110,label: "Describe Issue",price: "0",icon: "",selected: true}
+    ]
   }
 }
+

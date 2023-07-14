@@ -1,0 +1,45 @@
+<vex-page-layout mode="card">
+    <vex-page-layout-header class="flex flex-col items-start justify-center">
+        <div class="container">
+          <h2 class="headline m-0 page-title">SETTINGS</h2>
+        </div>
+    </vex-page-layout-header>
+    <vex-page-layout-content class="container">
+        <div class="card store-settings">
+            <div class="p-4 header settings-container">
+                <h2 class="headline mb-4">
+                    <mat-icon class="mr-3" svgIcon="mat:settings"></mat-icon>
+                    <span>Store Configuration</span>
+                </h2>
+                <div class="overflow-hidden">
+                    <mat-form-field class="w-full">
+                        <mat-label>Theme Color</mat-label>
+                        <mat-select [(value)]="selectedColor">
+                          <mat-option  [value]="color.key" *ngFor="let color of colorVariables | keyvalue" (click)="selectColor(color)">{{ color.key | uppercase }}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-divider></mat-divider>
+                    <section class="example-section">
+                        <h6 class="title"> STORE SERVICES</h6>
+                        <ul>
+                            <li *ngFor="let service of storeSettingsService.StoreServices">
+                                <mat-checkbox class="services-list" color="primary"  [(ngModel)]="service.selected">{{service.label}} - ${{service.price}}</mat-checkbox>
+                                <mat-icon  class="icon-sm btn__icon ml-6 services-list-icon" svgIcon="mat:edit"></mat-icon>
+                                <mat-icon  class="icon-sm btn__icon ml-2 services-list-icon" svgIcon="mat:delete"></mat-icon>
+                            </li>
+                        </ul>
+                        
+                        <div class="flex justify-center my-2">
+                            <button class="rounded-full flex-none" color="primary" mat-flat-button type="button" (click)="openCreateService()">
+                                <mat-icon class="icon-sm btn__icon" svgIcon="mat:add"></mat-icon>
+                                <span>New Service</span>
+                            </button>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </vex-page-layout-content>
+</vex-page-layout>
+
+

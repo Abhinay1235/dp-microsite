@@ -52,9 +52,26 @@ blockquote {
   text-transform: capitalize;
 }
 
+.text-uppercase {
+  text-transform: uppercase;
+}
+
+.prt-3{
+  position: relative;
+  top: 3px;
+}
+
 .justify-space-between {
   justify-content: space-between;
 }
+
+.mdc-snackbar  {
+  margin-bottom: 2em !important;
+}
+
+// ::-webkit-scrollbar {
+//   display: none;
+// }
 
 .dp-calender {
   --tw-border-opacity: 1;
@@ -112,16 +129,34 @@ blockquote {
       border-top-color: rgb(82 63 105 / 69%);
   }
 
-  .mat-mdc-chip.selected-chip {
-    
-    .mat-mdc-chip-action-label{
+  .mat-mdc-chip {
+
+    &.selected-chip .mat-mdc-chip-action-label{
       color: #ffffff;
     }
+
   }
 
   .mat-mdc-chip-action-label{
     font-weight: bold;
   }
+
+
+
+  .date-scroller .mdc-evolution-chip__action--primary {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    margin: 0 auto;
+  }
+
+
+  .vehicle-selection {
+    display: block;
+    text-align: left;
+    float: left;
+  }
   
 }
+
+
 

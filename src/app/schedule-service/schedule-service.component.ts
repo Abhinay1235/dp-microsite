@@ -146,10 +146,12 @@ export class ScheduleServiceComponent implements OnInit {
   verifyDate(date: Date) {
     const currentDate = new Date();
     const getDay = date.getDay();
-    if((date.getDate() === currentDate.getDate()) && (date.getMonth()=== currentDate.getMonth()) && (date.getFullYear() === currentDate.getFullYear()))
+    if((date.getDate() === currentDate.getDate()) && (date.getMonth()=== currentDate.getMonth()) && (date.getFullYear() === currentDate.getFullYear()) && (getDay !== 0) && (getDay !== 6)){
       return false;
-    else
+    } 
+    else {
       return ((date < currentDate) || (getDay === 0)|| (getDay === 6)) ? true : false;
+    }
  }
 
   getPreviousWeek(date:Date): void {

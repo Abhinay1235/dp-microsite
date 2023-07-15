@@ -19,6 +19,7 @@ import { CreateVehicleModule } from '../components/create-vehicle/create-vehicle
 import { MatDialogModule } from '@angular/material/dialog';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { UserLocationModule } from '../components/user-location/user-location.module';
+import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
   declarations: [ScheduleServiceComponent],
@@ -41,7 +42,8 @@ import { UserLocationModule } from '../components/user-location/user-location.mo
     MatGridListModule,
     CreateVehicleModule,
     UserLocationModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatDividerModule
   ]
 })
 export class ScheduleServiceModule {

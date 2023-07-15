@@ -19,8 +19,8 @@
 
                             <div @fadeInUp
                                 class="mt-6 mb-8 flex flex-col sm:flex-row gap-4 sm:gap-6 grid grid-cols-1 sm:grid-cols-1">
-                                <mat-radio-group class="gap-4" [(ngModel)]="selectedVehicle">
-                                    <mat-radio-button class="flex w-full mb-1" color="warn" *ngFor="let vehicle of userInfo.vehicles" [checked]="vehicle.primaryVehicle" [value]="vehicle.id">
+                                <mat-radio-group class="gap-4">
+                                    <mat-radio-button class="flex w-full mb-1" color="warn" *ngFor="let vehicle of userInfo.vehicles" [checked]="vehicle.primaryVehicle" [value]="vehicle" (change)="onVehicleChange($event)">
                                         <span class="vehicle-selection">{{vehicle.year}} {{vehicle.make}} {{vehicle.model}},</span>
                                         <span class="vehicle-selection ml-2">  {{vehicle.mileage}} miles</span>
                                     </mat-radio-button>
@@ -198,27 +198,51 @@
                             </h2>
                             <div @fadeInRight>
                                 <p class="m-0 caption flex text-capitalize text-hint">Date and Time</p>
-                                <div class="m-0 text-lg flex">{{item.value}}</div>
+                                <div class="m-0 text-lg flex">{{selectedDate}}, {{selectedTimeSlot}}</div>
                             </div>  
-                            <div class="items-center flex" *ngFor="let item of reviewInfo | keyvalue">
-                                <div @scaleIn
-                                     class="w-10 h-10 rounded-full bg-primary/10 text-primary ltr:mr-3 rtl:ml-3 flex items-center justify-center">
-                                  <mat-icon class="icon-sm" svgIcon="mat:phone" *ngIf="item.key === 'number'"></mat-icon>
-                                  <mat-icon class="icon-sm" svgIcon="mat:mail" *ngIf="item.key === 'email'"></mat-icon>
-                                  <mat-icon class="icon-sm" svgIcon="mat:schedule" *ngIf="item.key === 'appointment'"></mat-icon>
-                                  <mat-icon class="icon-sm" svgIcon="mat:commute" *ngIf="item.key === 'transportation'"></mat-icon>
-                                  <mat-icon class="icon-sm" svgIcon="mat:directions_car" *ngIf="item.key === 'vehicle'"></mat-icon>
-                                  <mat-icon class="icon-sm" svgIcon="mat:local_car_wash" *ngIf="item.key === 'services'"></mat-icon>
-                                  <mat-icon class="icon-sm" svgIcon="mat:badge" *ngIf="item.key === 'firstname'"></mat-icon>
-                                  <mat-icon class="icon-sm" svgIcon="mat:badge" *ngIf="item.key === 'lastname'"></mat-icon>
-                                </div>
-                          
-                                <div @fadeInRight>
-                                  <p class="m-0 caption flex text-capitalize text-hint">{{item.key}}</p>
-                                  <div class="m-0 text-lg flex" *ngIf="['services','vehicle'].indexOf(item.key) < 0">{{item.value}}</div>
-                                  <div class="m-0 text-lg flex" *ngIf="item.key === 'vehicle'">Lexus RX 350, 35674 miles.</div>
-                                </div>         
-                            </div>   
+                            <div @fadeInRight>
+                                <p class="m-0 caption flex text-capitalize text-hint">Appointment type</p>
+                                <div class="m-0 text-lg flex">{{transportOption}}</div>
+                            </div> 
+                            <div @fadeInRight>
+                                <p class="m-0 caption flex text-capitalize text-hint">Chosen Services</p>
+                                <div class="m-0 text-lg flex">{{transportOption}}</div>
+                            </div> 
+                            <div @fadeInRight *ngIf="transportOption === 'pickup'">
+                                <p class="m-0 caption flex text-capitalize text-hint">Pickup Location</p>
+                                <div class="m-0 text-lg flex text-left">{{pickupLocation.address}}</div>
+                            </div>
+                            <div class="mb-2" @fadeInRight *ngIf="transportOption === 'pickup'">
+                                <p class="m-0 caption flex text-capitalize text-hint">DropOff Location</p>
+                                <div class="m-0 text-lg flex text-left">{{dropOffLocation.address}}</div>
+                            </div> 
+                            <mat-divider></mat-divider>
+                            <h2 class="headline mb-4 text-left">
+                                <mat-icon class="mr-3 prt-3" svgIcon="mat:local_car_wash"></mat-icon>
+                                <span>Vehicle Info:</span>
+                            </h2>
+                            <div class="mb-2" @fadeInRight *ngIf="selectedVehicle">
+                                <span class="vehicle-selection">{{selectedVehicle.year}} {{selectedVehicle.make}} {{selectedVehicle.model}},</span>
+                                <span class="vehicle-selection ml-2">  {{selectedVehicle.mileage}} miles</span>
+                            </div>
+                            <mat-divider></mat-divider>
+                            <h2 class="headline mb-4 text-left">
+                                <mat-icon class="mr-3 prt-3" svgIcon="mat:badge"></mat-icon>
+                                <span>Contact Info:</span>
+                            </h2>
+                            <div @fadeInRight>
+                                <p class="m-0 caption flex text-capitalize text-hint">First Name</p>
+                                <div class="m-0 text-lg flex">{{userInfo.firstname}}</div>
+                            </div> 
+                            <div @fadeInRight>
+                                <p class="m-0 caption flex text-capitalize text-hint">Last Name</p>
+                                <div class="m-0 text-lg flex">{{userInfo.lastname}}</div>
+                            </div> 
+                            <div @fadeInRight>
+                                <p class="m-0 caption flex text-capitalize text-hint">Email</p>
+                                <div class="m-0 text-lg flex">{{userInfo.email}}</div>
+                            </div> 
+                               
                         </div>
                     </div>
 

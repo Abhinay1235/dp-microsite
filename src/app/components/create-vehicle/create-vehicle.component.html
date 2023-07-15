@@ -6,25 +6,25 @@
     <mat-dialog-content class="flex flex-col">
         <mat-form-field class="vex-flex-form-field flex-none">
             <mat-label>Year</mat-label>
-            <mat-select formControlName="selectedYear">
+            <mat-select formControlName="year">
               <mat-option *ngFor="let t of yearList" [value]="t">{{ t }}</mat-option>
             </mat-select>
         </mat-form-field>
         <mat-form-field class="vex-flex-form-field flex-none">
             <mat-label>Make</mat-label>
-            <mat-select formControlName="selectedMake">
+            <mat-select formControlName="make">
               <mat-option *ngFor="let t of makeList" [value]="t">{{ t }}</mat-option>
             </mat-select>
         </mat-form-field>
         <mat-form-field class="vex-flex-form-field flex-none">
             <mat-label>Model</mat-label>
-            <mat-select formControlName="selectedModel">
+            <mat-select formControlName="model">
               <mat-option *ngFor="let t of modelList" [value]="t">{{ t }}</mat-option>
             </mat-select>
         </mat-form-field>
         <mat-form-field>
-            <mat-label>Odometer</mat-label>
-            <input formControlName="odometer" matInput>
+            <mat-label>Mileage</mat-label>
+            <input formControlName="mileage" matInput>
           </mat-form-field>
       
     </mat-dialog-content>

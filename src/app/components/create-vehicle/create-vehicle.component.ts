@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { Vehicle } from 'src/app/interface/vehicle.interface';
 
 @Component({
   selector: 'vex-create-vehicle',
@@ -10,28 +9,27 @@ import { Vehicle } from 'src/app/interface/vehicle.interface';
 })
 export class CreateVehicleComponent implements OnInit{
 
-  year:number;
+  currentYear:number;
   yearList: number[] = [];
   makeList: string[] = ['Audi', 'Lexus', 'BMW', 'Ford'];
   modelList: string[] = ['RX 350', 'ES 100'];
 
-  vehicle: Vehicle;
 
   vehicleForm = this.fb.group({
-    selectedYear: null,
-    selectedMake: null, 
-    selectedModel: null,
-    odometer: null
+    year: null,
+    make: null, 
+    model: null,
+    mileage: null
   });
 
   constructor(private fb: UntypedFormBuilder, private dialogRef: MatDialogRef<CreateVehicleComponent>) { }
 
   ngOnInit(): void {
     const currentTime = new Date();
-    this.year = currentTime.getFullYear();
+    this.currentYear = currentTime.getFullYear();
 
     [...Array(20)].forEach((_, i) => {
-      this.yearList.push(this.year - i);
+      this.yearList.push(this.currentYear - i);
     });
 
   }

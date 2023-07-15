@@ -6,11 +6,15 @@ import { NavigationService } from '../../services/navigation.service';
 import { PopoverService } from '../../components/popover/popover.service';
 import { MegaMenuComponent } from '../../components/mega-menu/mega-menu.component';
 import { Observable, of } from 'rxjs';
+import { scaleIn400ms } from '../../../@vex/animations/scale-in.animation';
 
 @Component({
   selector: 'vex-toolbar',
   templateUrl: './toolbar.component.html',
-  styleUrls: ['./toolbar.component.scss']
+  styleUrls: ['./toolbar.component.scss'],
+  animations: [
+    scaleIn400ms
+  ]
 })
 export class ToolbarComponent {
 

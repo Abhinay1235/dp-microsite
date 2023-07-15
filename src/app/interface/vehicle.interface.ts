@@ -1,5 +1,8 @@
 export interface Vehicle {
-    selectedYear: number,
-    selectedMake: string,
-    selectedModel: string
+    id: number,
+    year: number,
+    make: string,
+    model: string,
+    mileage: string,
+    primaryVehicle: boolean
 }

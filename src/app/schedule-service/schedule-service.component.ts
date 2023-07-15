@@ -5,11 +5,11 @@ import { MatStepper } from '@angular/material/stepper';
 import { ActivatedRoute, Router } from '@angular/router';
 import { fadeInRight400ms } from 'src/@vex/animations/fade-in-right.animation';
 import { fadeInUp400ms } from 'src/@vex/animations/fade-in-up.animation';
-import { scaleIn400ms } from 'src/@vex/animations/scale-in.animation';
 import { stagger80ms } from 'src/@vex/animations/stagger.animation';
 import { CreateVehicleComponent } from '../components/create-vehicle/create-vehicle.component';
 import { UserLocationComponent } from '../components/user-location/user-location.component';
 import { userLocation } from '../interface/userLocation.interface';
+import { Vehicle } from '../interface/vehicle.interface';
 @Component({
   selector: 'vex-schedule-service',
   templateUrl: './schedule-service.component.html',
@@ -17,7 +17,6 @@ import { userLocation } from '../interface/userLocation.interface';
   animations: [
     stagger80ms,
     fadeInUp400ms,
-    scaleIn400ms,
     fadeInRight400ms
   ]
 })
@@ -28,7 +27,7 @@ export class ScheduleServiceComponent implements OnInit {
   hideStepper: boolean = true;
   phoneNumber: string = '';
   selectedDate:any;
-  selectedVehicle: any;
+  selectedVehicle: Vehicle;
   activeState: boolean[]=[];
   servicesSelected: number = 0;
   availableSlots: string[] = [];
@@ -129,6 +128,11 @@ export class ScheduleServiceComponent implements OnInit {
       this.dropOffLocation = event.value;
     }
   }
+
+  onVehicleChange(event: any) {
+    this.selectedVehicle = event.value;
+  }
+
   syncReturnAddress():void {
     if(this.returnAddressCheck) {
       this.dropOffLocation = this.pickupLocation;
@@ -243,6 +247,7 @@ export class ScheduleServiceComponent implements OnInit {
   }
 
   selectChip(chip: any): void {
+    console.log(this.selectedVehicle);
     this.dates.forEach((c: any) => {
       c.selected = (c === chip);
     });

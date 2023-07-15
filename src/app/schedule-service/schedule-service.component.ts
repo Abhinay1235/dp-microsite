@@ -266,8 +266,8 @@ export class ScheduleServiceComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result.selectedYear && result.selectedMake && result.selectedModel && result.odometer)
-        this.userInfo.vehicles.push({id: this.userInfo.vehicles.length + 10, year: result.selectedYear, make: result.selectedMake, model: result.selectedModel, mileage: result.odometer, primaryVehicle: false})
+      if(result.year && result.make && result.model && result.mileage)
+        this.userInfo.vehicles.push({id: this.userInfo.vehicles.length + 10, primaryVehicle: false, ...result})
     });
   }
 

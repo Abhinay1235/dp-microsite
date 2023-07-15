@@ -5,6 +5,8 @@ import { fadeInUp400ms } from 'src/@vex/animations/fade-in-up.animation';
 import { scaleIn400ms } from 'src/@vex/animations/scale-in.animation';
 import { stagger80ms } from 'src/@vex/animations/stagger.animation';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import { ColorVariable, colorVariables } from 'src/@vex/components/config-panel/color-variables';
+import { ConfigService } from 'src/@vex/config/config.service';
 
 @Component({
   selector: 'vex-search-user',
@@ -21,6 +23,8 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 
 export class SearchUserComponent  {
   phoneNumber: string;
+  colorVariables: Record<string, ColorVariable> = colorVariables;
+  selectedColor = 'red';
 
   userInfo = {
     id:"123",
@@ -39,7 +43,7 @@ export class SearchUserComponent  {
     ]
   }
 
-  constructor(private router: Router, private _snackBar: MatSnackBar) { }
+  constructor(private router: Router, private _snackBar: MatSnackBar, private configService: ConfigService,) { }
   
   onInput(event: any): void {
     const inputValue: string = event.target.value;
@@ -58,6 +62,20 @@ export class SearchUserComponent  {
       this._snackBar.open("Enter Phone Number", 'CLOSE', {
         duration: 3000,
       });
+  }
+
+  selectColor(color: any): void {
+    this.selectedColor = color.key;
+    this.configService.updateConfig({
+      style: {
+        colors: {
+          primary: {
+            default: color.value.default,
+            contrast: color.value.contrast
+          }
+        }
+      }
+    });
   }
   
 

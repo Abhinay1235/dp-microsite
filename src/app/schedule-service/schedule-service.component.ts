@@ -93,12 +93,11 @@ export class ScheduleServiceComponent implements OnInit {
   ]
 
   timeSlotList = {
-    14:['7:00','7:30','12:00', '10:00', '2:30','9:00','4:00'],
-    21:['10:00', '2:30'],
-    22:['9:00','4:00'],
-    24:['9:00 - 10:00','12:00 - 1:00', '1:30 - 2:30', '3:00 - 4:00','9:00 - 10:00','12:00 - 1:00', '1:30 - 2:30', '3:00 - 4:00','9:00 - 10:00','12:00 - 1:00', '1:30 - 2:30', '3:00 - 4:00','9:00 - 10:00','12:00 - 1:00', '1:30 - 2:30', '3:00 - 4:00','9:00 - 10:00','12:00 - 1:00', '1:30 - 2:30', '3:00 - 4:00'],
-    28:['9:00 - 10:00','12:00 - 1:00', '1:30 - 2:30', '3:00 - 4:00'],
-  }
+    17:['07:00','07:30','12:00', '10:00', '02:30','09:00','04:00'],
+    19:['10:00', '02:30'],
+    20:['09:00 - 10:00','12:00 - 01:00', '01:30 - 02:30', '03:00 - 04:00'],
+    21:['09:00 - 10:00','12:00 - 01:00', '01:30 - 02:30', '03:00 - 04:00','09:00 - 10:00','12:00 - 01:00', '01:30 - 02:30', '03:00 - 04:00','09:00 - 10:00','12:00 - 01:00', '01:30 - 02:30', '03:00 - 04:00','09:00 - 10:00','12:00 - 01:00', '01:30 - 02:30', '03:00 - 04:00','09:00 - 10:00','12:00 - 01:00', '01:30 - 02:30', '03:00 - 04:00'],
+ }
 
   reviewInfo = {
     firstname: this.userInfo.firstname,
@@ -225,16 +224,19 @@ export class ScheduleServiceComponent implements OnInit {
   }
 
   onDateChange() {
-    const t = this.selectedDate.getDate();
+    const t = new Date(this.selectedDate.fullDate).getDate();
     this.availableSlots = this.timeSlotList[t]?this.timeSlotList[t]:[];
   }
 
-  toggleReview() {
+  toggleReview(id?: number) {
     this.isReview = !this.isReview;
+    if(id>=0) {
+      this.selectStep(id);
+    }
   }
 
   initiateDates() {
-    this.currentDate = new Date();
+    this.currentDate = this.selectedDate ? new Date(this.selectedDate.fullDate) : new Date();
     this.populateInitialDates(this.currentDate);
   }
 
@@ -247,13 +249,12 @@ export class ScheduleServiceComponent implements OnInit {
   }
 
   selectChip(chip: any): void {
-    console.log(this.selectedVehicle);
     this.dates.forEach((c: any) => {
       c.selected = (c === chip);
     });
-    this.selectedDate = new Date(chip.fullDate).toDateString() ;
+    this.selectedDate = chip; //new Date(chip.fullDate).toDateString() ;
     this.availableSlots = this.timeSlotList[chip.date]?this.timeSlotList[chip.date]:[];
-    this.selectedTimeSlot = null;
+    this.selectedTimeSlot = undefined;
   }
 
   timeSlotSelected(timeSlot: string):void {

@@ -20,7 +20,7 @@
                             <div @fadeInUp
                                 class="mt-6 mb-8 flex flex-col sm:flex-row gap-4 sm:gap-6 grid grid-cols-1 sm:grid-cols-1">
                                 <mat-radio-group class="gap-4">
-                                    <mat-radio-button class="flex w-full mb-1" color="warn" *ngFor="let vehicle of userInfo.vehicles" [checked]="vehicle.primaryVehicle" [value]="vehicle" (change)="onVehicleChange($event)">
+                                    <mat-radio-button class="flex w-full mb-1" color="primary" *ngFor="let vehicle of userInfo.vehicles" [checked]="vehicle.primaryVehicle" [value]="vehicle" (change)="onVehicleChange($event)">
                                         <span class="vehicle-selection">{{vehicle.year}} {{vehicle.make}} {{vehicle.model}},</span>
                                         <span class="vehicle-selection ml-2">  {{vehicle.mileage}} miles</span>
                                     </mat-radio-button>
@@ -72,11 +72,11 @@
                                 <div class=" mx-auto flex w-full flex-col sm:flex-row grid grid-cols-1 sm:grid-cols-1" [ngSwitch]="transportOption">
                                     <div *ngSwitchCase="'pickup'"
                                         @fadeInUp
-                                        class="rounded bg-app-bar overflow-hidden max-h-full w-full max-w-2xs flex-none flex flex-col pt-4">
+                                        class="rounded bg-app-bar overflow-hidden max-h-full w-full pr-1 flex-none flex flex-col pt-4">
                                         
                                         <h2 class="subheading-2 mb-2 font-medium text-uppercase">PICKUP LOCATION</h2>
                                         <mat-radio-group class="gap-4 w-full">
-                                            <mat-radio-button color="warn" class="flex text-left mb-4" *ngFor="let location of userInfo.locations" [checked]="location.primaryLocation" [value]="location" (change)="onPickupLocationChange($event)">{{location.address}}</mat-radio-button>
+                                            <mat-radio-button color="primary" class="flex text-left mb-4" *ngFor="let location of userInfo.locations" [checked]="location.primaryLocation" [value]="location" (change)="onPickupLocationChange($event)">{{location.address}}</mat-radio-button>
                                         </mat-radio-group>
                                         
                                         <div class="bg-hover mt-4 flex-none">
@@ -105,7 +105,7 @@
                                         
                                         <h2 class="subheading-2 mb-2 font-medium text-uppercase">DropOff LOCATION</h2>
                                         <mat-radio-group class="gap-4 w-full">
-                                            <mat-radio-button color="warn" class="flex text-left mb-4"  [checked]="true">
+                                            <mat-radio-button color="primary" class="flex text-left mb-4"  [checked]="true">
                                                 {{dropOffLocation.address}}
                                                 <mat-icon (click)="openLocation('dropOff', dropOffLocation)"  class="icon-sm prt-3 btn__icon ml-6 services-list-icon" svgIcon="mat:edit"></mat-icon>
                                             </mat-radio-button>
@@ -130,10 +130,10 @@
                                 <div class="step-label">Step 04</div>
                             </ng-template>
 
-                            <h2  class="step-header-label title mt-5 mb-3">Appointment</h2>
+                            <h2  class="step-header-label title mt-5">Appointment</h2>
                                 
                             <div @fadeInUp
-                                class="mt-6 mx-auto flex flex-col sm:flex-row gap-4 sm:gap-6 grid lg:grid-cols-1 sm:grid-cols-1">
+                                class="mt-3 mx-auto flex flex-col sm:flex-row gap-4 sm:gap-6 grid lg:grid-cols-1 sm:grid-cols-1">
                                 <!-- <mat-calendar class="dp-calender mb-12" [(selected)]="selectedDate" (selectedChange)="onDateChange()" minDate="currentDate"></mat-calendar>
                                 <mat-chip-listbox class="appointment-chip-wrapper block" aria-label="Appointment Time">
                                     <h4 class="title w-full mb-2 text-left" *ngIf="availableSlots.length > 0">Available Slots:</h4>
@@ -159,7 +159,7 @@
                                         <mat-grid-list cols="7">
                                             <mat-grid-tile *ngFor="let date of dates">
                                                 <mat-chip 
-                                                    [ngClass]="{ 'selected-chip': date.selected }"
+                                                    [ngClass]="{ 'selected-chip': selectedDate ? (date.date === selectedDate.date) : date.selected}"
                                                     (click)="selectChip(date)"
                                                     class="w-full"
                                                     disabled={{date.isDisabled}}
@@ -171,21 +171,24 @@
                                         <mat-icon class="icon-sm" svgIcon="mat:arrow_right"></mat-icon>
                                     </button>
                                 </div>
-                                <h4 class="title w-full mb-2 text-left" *ngIf="availableSlots.length > 0">Available Slots:</h4>
-                                <h4 class="title w-full mb-2 text-left" *ngIf="selectedDate && availableSlots.length == 0">No slots Available</h4>
-                                <mat-chip-listbox class="appointment-chip-wrapper block" aria-label="Appointment Time">
-                                    <mat-chip-option class="appointment-chip-list title" *ngFor="let timeSlot of availableSlots.slice(0, showMoreDatesSliceIndex); let i = index" (click)="timeSlotSelected(timeSlot)">{{timeSlot}}</mat-chip-option>
-                                </mat-chip-listbox>
-                                <h6 class="dp-link text-left" *ngIf="(availableSlots.length > showMoreDatesSliceIndex) && !showMoreDates" (click)="toggleShowDates()">Show more dates</h6>
-                                <h6 class="dp-link text-left" *ngIf="(availableSlots.length > showMoreDatesSliceIndex) && showMoreDates" (click)="toggleShowDates()">Hide more dates</h6>
-                                <mat-chip-listbox class="appointment-chip-wrapper block" *ngIf="(availableSlots.length > showMoreDatesSliceIndex) && showMoreDates" aria-label="Appointment Time">
-                                   <mat-chip-option class="appointment-chip-list title" *ngFor="let timeSlot of availableSlots.slice(showMoreDatesSliceIndex); let i = index" (click)="timeSlotSelected(timeSlot)">{{timeSlot}}</mat-chip-option>
-                                </mat-chip-listbox>
+                                <div class="timeSlots-container">
+                                    <h4 class="title w-full mb-2 text-left" *ngIf="availableSlots.length > 0">Available Slots:</h4>
+                                    <h4 class="title w-full mb-2 text-left" *ngIf="selectedDate && availableSlots.length == 0">No slots Available</h4>
+                                    <mat-chip-listbox class="appointment-chip-wrapper block" aria-label="Appointment Time">
+                                        <mat-chip-option class="appointment-chip-list title" *ngFor="let timeSlot of availableSlots.slice(0, showMoreDatesSliceIndex); let i = index" (click)="timeSlotSelected(timeSlot)">{{timeSlot}}</mat-chip-option>
+                                        <h6 class="dp-link text-left pt-2 pl-2 w-full" *ngIf="(availableSlots.length > showMoreDatesSliceIndex) && !showMoreDates" (click)="toggleShowDates()">Show more dates</h6>
+                                        <h6 class="dp-link text-left pt-2 pl-2 w-full" *ngIf="(availableSlots.length > showMoreDatesSliceIndex) && showMoreDates" (click)="toggleShowDates()">Hide more dates</h6>
+                                        <div class="w-full" *ngIf="(availableSlots.length > showMoreDatesSliceIndex) && showMoreDates">
+                                            <mat-chip-option class="appointment-chip-list title"  *ngFor="let timeSlot of availableSlots.slice(showMoreDatesSliceIndex); let i = index" (click)="timeSlotSelected(timeSlot)">{{timeSlot}}</mat-chip-option>
+                                        </div>
+                                    </mat-chip-listbox>
 
-                                <div class="w-full mt-4 appointment-selected title font-medium" *ngIf="selectedDate && selectedTimeSlot">
-                                    <mat-icon class="icon-sm mr-1 prt-3" svgIcon="mat:event"></mat-icon>
-                                    <span>{{selectedDate}}, {{selectedTimeSlot}} </span>
+                                    <div class="w-full mt-4 appointment-selected title font-medium" *ngIf="selectedDate && selectedTimeSlot">
+                                        <mat-icon class="icon-sm mr-1 prt-3" svgIcon="mat:event"></mat-icon>
+                                        <span>{{selectedDate.fullDate.toDateString()}}, {{selectedTimeSlot}} </span>
+                                    </div>
                                 </div>
+                                
                             </div>    
                         </mat-step>
                     </mat-stepper>
@@ -196,17 +199,26 @@
                                 <mat-icon class="mr-3 prt-3" svgIcon="mat:schedule"></mat-icon>
                                 <span>Appointment Info:</span>
                             </h2>
-                            <div @fadeInRight>
+                            <div @fadeInRight *ngIf="selectedDate">
                                 <p class="m-0 caption flex text-capitalize text-hint">Date and Time</p>
-                                <div class="m-0 text-lg flex">{{selectedDate}}, {{selectedTimeSlot}}</div>
+                                <div class="m-0 text-lg flex">
+                                    {{selectedDate.fullDate.toDateString()}}, {{selectedTimeSlot}}
+                                    <mat-icon (click)="toggleReview(3)"  class="icon-sm prt-3 btn__icon ml-6 review-edit-icon" svgIcon="mat:edit"></mat-icon>
+                                </div>
                             </div>  
                             <div @fadeInRight>
                                 <p class="m-0 caption flex text-capitalize text-hint">Appointment type</p>
-                                <div class="m-0 text-lg flex">{{transportOption}}</div>
+                                <div class="m-0 text-lg flex">
+                                    {{transportOption}}
+                                    <mat-icon (click)="toggleReview(2)"  class="icon-sm prt-3 btn__icon ml-6 review-edit-icon" svgIcon="mat:edit"></mat-icon>
+                                </div>
                             </div> 
                             <div @fadeInRight>
                                 <p class="m-0 caption flex text-capitalize text-hint">Chosen Services</p>
-                                <div class="m-0 text-lg flex">{{transportOption}}</div>
+                                <div class="m-0 text-lg flex">
+                                    {{transportOption}}
+                                    <mat-icon (click)="toggleReview(1)"  class="icon-sm prt-3 btn__icon ml-6 review-edit-icon" svgIcon="mat:edit"></mat-icon>
+                                </div>
                             </div> 
                             <div @fadeInRight *ngIf="transportOption === 'pickup'">
                                 <p class="m-0 caption flex text-capitalize text-hint">Pickup Location</p>
@@ -224,6 +236,7 @@
                             <div class="mb-2" @fadeInRight *ngIf="selectedVehicle">
                                 <span class="vehicle-selection">{{selectedVehicle.year}} {{selectedVehicle.make}} {{selectedVehicle.model}},</span>
                                 <span class="vehicle-selection ml-2">  {{selectedVehicle.mileage}} miles</span>
+                                <mat-icon (click)="toggleReview(0)"  class="icon-sm prt-3 btn__icon ml-6 review-edit-icon" svgIcon="mat:edit"></mat-icon>
                             </div>
                             <mat-divider></mat-divider>
                             <h2 class="headline mb-4 text-left">
@@ -283,7 +296,7 @@
                                 <mat-icon class="ml-3 icon-sm action-icon" svgIcon="mat:fast_rewind"></mat-icon>
                                 Transport
                             </button>
-                            <button  class="action-btn" (click)="toggleReview()">
+                            <button  class="action-btn" *ngIf="selectedTimeSlot" (click)="toggleReview()">
                                 Review
                                 <mat-icon class="mr-3 icon-sm action-icon" svgIcon="mat:fast_forward"></mat-icon>
                             </button>

@@ -8,6 +8,7 @@ import { SearchUserComponent } from './search-user.component';
 import { SearchUserRoutingModule } from './search-user-routing-module';
 import { FormsModule } from '@angular/forms';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatSelectModule } from '@angular/material/select';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     MatRippleModule,
     MatIconModule,
     FormsModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatSelectModule
   ]
 })
 export class SearchUserModule {

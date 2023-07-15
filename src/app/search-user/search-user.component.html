@@ -11,6 +11,13 @@
                [(ngModel)]="phoneNumber" (input)="onInput($event)">
         <button class="rounded-full flex-none" color="primary" mat-flat-button type="button" (click)="search()">Search</button>
       </div>
+
+      <mat-form-field class="mt-16">
+        <mat-label>Theme Color</mat-label>
+        <mat-select [(value)]="selectedColor">
+          <mat-option  [value]="color.key" *ngFor="let color of colorVariables | keyvalue" (click)="selectColor(color)">{{ color.key | uppercase }}</mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
 </div>
 

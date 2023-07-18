@@ -26,10 +26,11 @@ import { Vehicle } from '../interface/vehicle.interface';
 export class ScheduleServiceComponent implements OnInit {
   hideStepper: boolean = true;
   phoneNumber: string = '';
+  stepName: string='Choose Vehicle';
   selectedDate:any;
   selectedVehicle: Vehicle;
   activeState: boolean[]=[];
-  servicesSelected: number = 0;
+  servicesSelectedCount: number = 0;
   availableSlots: string[] = [];
   transportOption: string;
   showMoreDates: boolean = false;
@@ -211,13 +212,13 @@ export class ScheduleServiceComponent implements OnInit {
     this.dtMonth = monthList.join(` - `);
   }
   
-  toggleClickState(index: number): void {
+  toggleServiceSelection(index: number): void {
     this.services[index].isActive = !this.services[index].isActive;
     if(this.services[index].isActive) {
-      this.servicesSelected++;
+      this.servicesSelectedCount++;
     }
     else {
-      this.servicesSelected--;
+      this.servicesSelectedCount--;
     }
   }
 
@@ -232,6 +233,7 @@ export class ScheduleServiceComponent implements OnInit {
 
   toggleReview(id?: number) {
     this.isReview = !this.isReview;
+    this.stepName="Review"
     if(id>=0) {
       this.selectStep(id);
     }
@@ -245,7 +247,17 @@ export class ScheduleServiceComponent implements OnInit {
   selectStep(index: number): void {
     this.stepper.selectedIndex = index;
 
+    if(index === 0){
+      this.stepName = 'Choose Vehicle';
+    }
+    else if(index === 1) {
+      this.stepName = 'services'
+    }
+    else if(index === 2) {
+      this.stepName = 'transportation'
+    }
     if(index === 3) {
+      this.stepName='Appointment'
       this.initiateDates();
     }
   }

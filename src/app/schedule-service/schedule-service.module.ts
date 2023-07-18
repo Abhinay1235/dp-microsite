@@ -42,7 +42,6 @@ import { MatDividerModule } from '@angular/material/divider';
     MatGridListModule,
     CreateVehicleModule,
     UserLocationModule,
-    MatCheckboxModule,
     MatDividerModule
   ]
 })

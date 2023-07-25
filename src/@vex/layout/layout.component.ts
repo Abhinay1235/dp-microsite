@@ -64,20 +64,7 @@ export class LayoutComponent implements OnInit, AfterViewInit {
       untilDestroyed(this)
     ).subscribe(() => this.layoutService.expandSidenav());
 
-    /**
-     * Open/Close Quickpanel through LayoutService
-     */
-    this.layoutService.quickpanelOpen$.pipe(
-      untilDestroyed(this)
-    ).subscribe(open => open ? this.quickpanel.open() : this.quickpanel.close());
-
-    /**
-     * Open/Close Sidenav through LayoutService
-     */
-    this.layoutService.sidenavOpen$.pipe(
-      untilDestroyed(this)
-    ).subscribe(open => open ? this.sidenav.open() : this.sidenav.close());
-
+  
     /**
      * Mobile only:
      * Close Sidenav after Navigating somewhere (e.g. when a user clicks a link in the Sidenav)
